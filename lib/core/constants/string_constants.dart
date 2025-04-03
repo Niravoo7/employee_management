@@ -23,6 +23,14 @@ class StringConstants {
   static const String strNextMonday = "Next Monday";
   static const String strNextTuesday = "Next Tuesday";
   static const String strAfterWeek = "After 1 week";
+  static const String strCurrentEmployees = "Current employees";
+  static const String strPreviousEmployees = "Previous employees";
+  static const String strSwipeLeftDelete = "Swipe left to delete";
+  static const String strEmployeeDataHasBeenDeleted =
+      "Employee data has been deleted";
+  static const String strUndo = "Undo";
+  static const String strEditEmployeeDetails = "Edit Employee Details";
+  static const String strFrom = "From";
 }
 
 String getDatePickerItemString(DatePickerItem datePickerItem) {

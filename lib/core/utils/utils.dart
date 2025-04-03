@@ -5,12 +5,14 @@ void showSnackBar(
   BuildContext context, {
   required String title,
   TextAlign? textAlign,
+  SnackBarAction? action,
 }) {
   final SnackBar snackBar = SnackBar(
     duration: const Duration(seconds: 2),
+    padding: const EdgeInsets.only(left: 16),
     content: Text(
       title,
-      maxLines: 2,
+      maxLines: 1,
       textAlign: textAlign ?? TextAlign.start,
       style: const TextStyle(
         fontWeight: FontWeight.w500,
@@ -19,6 +21,7 @@ void showSnackBar(
       ),
     ),
     backgroundColor: ThemeColors.clrBlack50,
+    action: action,
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

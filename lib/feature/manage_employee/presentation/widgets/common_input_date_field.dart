@@ -2,6 +2,7 @@ import "package:assignment/core/constants/image_constants.dart";
 import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
 import "package:assignment/core/shared/domain/method/methods.dart";
+import "package:assignment/core/utils/date_utils.dart";
 import "package:assignment/feature/manage_employee/presentation/widgets/common_calendar_picker.dart";
 import "package:flutter/material.dart";
 
@@ -49,7 +50,9 @@ class _CommonInputDateFieldState extends State<CommonInputDateField> {
             ),
             Text(
               widget.dateTime != null
-                  ? formatToDateMonthYear.format(widget.dateTime!)
+                  ? isToday(widget.dateTime!)
+                      ? StringConstants.strToday
+                      : formatToDateMonthYear.format(widget.dateTime!)
                   : StringConstants.strNoDate,
               style: TextStyle(
                 fontSize: FontSize.fontSizeRegular,

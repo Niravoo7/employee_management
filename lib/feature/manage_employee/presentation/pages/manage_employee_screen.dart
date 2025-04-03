@@ -11,13 +11,31 @@ import "package:assignment/injection_container/injection_container.dart";
 import "package:flutter/material.dart";
 
 class ManageEmployeeScreen extends StatelessWidget {
-  ManageEmployeeScreen({super.key});
+  ManageEmployeeScreen({super.key, this.employee});
+
+  final Employee? employee;
 
   final EmployeeCubit _employeeCubit = getIt<EmployeeCubit>();
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text(StringConstants.strAddEmployeeDetails)),
+    appBar: AppBar(
+      title: Text(
+        employee == null
+            ? StringConstants.strAddEmployeeDetails
+            : StringConstants.strEditEmployeeDetails,
+      ),
+      actions: <Widget>[
+        if (employee != null)
+          Padding(
+            padding: const EdgeInsets.only(right: 5),
+            child: IconButton(
+              onPressed: () {},
+              icon: const ImageIcon(AssetImage(IconConstants.icDelete)),
+            ),
+          ),
+      ],
+    ),
     body: SafeArea(
       child: Column(
         children: <Widget>[
@@ -74,14 +92,17 @@ class ManageEmployeeScreen extends StatelessWidget {
                     spacing: 20,
                     children: <Widget>[
                       CommonInputDateField(
-                        dateTime: DateTime.now(),
+                        dateTime: employee?.startDate ?? DateTime.now(),
                         isStartDate: true,
                       ),
                       const ImageIcon(
                         AssetImage(IconConstants.icArrowRight),
                         color: ThemeColors.clrPrimary,
                       ),
-                      CommonInputDateField(isStartDate: false),
+                      CommonInputDateField(
+                        dateTime: employee?.endDate,
+                        isStartDate: false,
+                      ),
                     ],
                   ),
                 ],
@@ -100,7 +121,9 @@ class ManageEmployeeScreen extends StatelessWidget {
                 spacing: 20,
                 children: <Widget>[
                   ActionButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     title: StringConstants.strCancel,
                     backgroundColor: ThemeColors.clrSecondary,
                     textColor: ThemeColors.clrPrimary,
@@ -114,6 +137,7 @@ class ManageEmployeeScreen extends StatelessWidget {
                           startDate: DateTime.now(),
                         ),
                       );
+                      Navigator.pop(context);
                     },
                     title: StringConstants.strSave,
                   ),

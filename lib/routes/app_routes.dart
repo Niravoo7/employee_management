@@ -13,8 +13,9 @@ class AppRoutes {
           builder: (_) => const EmployeeListScreen(),
         );
       case addDetailsRoute:
+        final dynamic employee = settings.arguments;
         return MaterialPageRoute<dynamic>(
-          builder: (_) => ManageEmployeeScreen(),
+          builder: (_) => ManageEmployeeScreen(employee: employee),
         );
       default:
         return MaterialPageRoute<dynamic>(

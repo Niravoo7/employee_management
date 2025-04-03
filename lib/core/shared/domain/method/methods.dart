@@ -13,3 +13,4 @@ void preLoadImages(BuildContext context) {
 }
 
 final DateFormat formatToDateMonthYear = DateFormat("dd MMM yyyy");
+final DateFormat formatToDateMonth = DateFormat("dd MMM, yyyy");
