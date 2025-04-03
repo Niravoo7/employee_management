@@ -5,12 +5,17 @@ import "package:assignment/core/shared/domain/method/methods.dart";
 import "package:assignment/feature/manage_employee/presentation/widgets/common_calendar_picker.dart";
 import "package:flutter/material.dart";
 
-class CommonInputDateField extends StatelessWidget {
-  const CommonInputDateField({required this.isStartDate, this.date, super.key});
+class CommonInputDateField extends StatefulWidget {
+  CommonInputDateField({required this.isStartDate, this.dateTime, super.key});
 
-  final DateTime? date;
+  DateTime? dateTime;
   final bool isStartDate;
 
+  @override
+  State<CommonInputDateField> createState() => _CommonInputDateFieldState();
+}
+
+class _CommonInputDateFieldState extends State<CommonInputDateField> {
   @override
   Widget build(BuildContext context) => Expanded(
     child: GestureDetector(
@@ -19,8 +24,12 @@ class CommonInputDateField extends StatelessWidget {
           context: context,
           builder:
               (BuildContext context) => CommonCalendarPicker(
-                isStartDate: isStartDate,
-                selectedDate: date,
+                isStartDate: widget.isStartDate,
+                selectedDate: widget.dateTime,
+                onDateSelected: (DateTime dateTime) {
+                  widget.dateTime = dateTime;
+                  setState(() {});
+                },
               ),
         );
       },
@@ -39,13 +48,13 @@ class CommonInputDateField extends StatelessWidget {
               color: ThemeColors.clrPrimary,
             ),
             Text(
-              date != null
-                  ? formatToDateMonthYear.format(date!)
+              widget.dateTime != null
+                  ? formatToDateMonthYear.format(widget.dateTime!)
                   : StringConstants.strNoDate,
               style: TextStyle(
                 fontSize: FontSize.fontSizeRegular,
                 color:
-                    date == null
+                    widget.dateTime == null
                         ? ThemeColors.clrGray100
                         : ThemeColors.clrBlack50,
               ),

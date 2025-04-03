@@ -1,3 +1,5 @@
+import "package:assignment/feature/manage_employee/presentation/widgets/common_calendar_picker.dart";
+
 class MapConstant {
   static const String mapEmployeeList = "employeeList";
 }
@@ -21,4 +23,19 @@ class StringConstants {
   static const String strNextMonday = "Next Monday";
   static const String strNextTuesday = "Next Tuesday";
   static const String strAfterWeek = "After 1 week";
+}
+
+String getDatePickerItemString(DatePickerItem datePickerItem) {
+  switch (datePickerItem) {
+    case DatePickerItem.noDate:
+      return StringConstants.strNoDate;
+    case DatePickerItem.today:
+      return StringConstants.strToday;
+    case DatePickerItem.nextMonday:
+      return StringConstants.strNextMonday;
+    case DatePickerItem.nextTuesday:
+      return StringConstants.strNextTuesday;
+    case DatePickerItem.after1Week:
+      return StringConstants.strAfterWeek;
+  }
 }

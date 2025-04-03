@@ -74,14 +74,14 @@ class ManageEmployeeScreen extends StatelessWidget {
                     spacing: 20,
                     children: <Widget>[
                       CommonInputDateField(
-                        date: DateTime.now(),
+                        dateTime: DateTime.now(),
                         isStartDate: true,
                       ),
                       const ImageIcon(
                         AssetImage(IconConstants.icArrowRight),
                         color: ThemeColors.clrPrimary,
                       ),
-                      const CommonInputDateField(isStartDate: false),
+                      CommonInputDateField(isStartDate: false),
                     ],
                   ),
                 ],

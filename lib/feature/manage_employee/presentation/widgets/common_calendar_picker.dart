@@ -3,62 +3,53 @@ import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
 import "package:assignment/core/shared/domain/method/methods.dart";
 import "package:assignment/core/shared/presentation/widget/action_button.dart";
+import "package:assignment/core/utils/date_utils.dart";
 import "package:flutter/material.dart";
 import "package:table_calendar/table_calendar.dart";
+
+enum DatePickerItem { noDate, today, nextMonday, nextTuesday, after1Week }
 
 class CommonCalendarPicker extends StatefulWidget {
   const CommonCalendarPicker({
     required this.isStartDate,
-    this.selectedDate,
+    required this.selectedDate,
+    required this.onDateSelected,
     super.key,
   });
 
   final bool isStartDate;
   final DateTime? selectedDate;
+  final Function(DateTime) onDateSelected;
 
   @override
   State<CommonCalendarPicker> createState() => _CommonCalendarPickerState();
 }
 
 class _CommonCalendarPickerState extends State<CommonCalendarPicker> {
-  late DateTime _selectedDay;
-  late DateTime _focusedDay;
-  late DateTime _today;
+  late DateTime _selectedDate;
+  late DatePickerItem selectedDatePickerItem = DatePickerItem.today;
+  late List<DatePickerItem> dateOptions = <DatePickerItem>[];
 
   @override
   void initState() {
     super.initState();
-    _today = DateTime.now();
-    _selectedDay = widget.selectedDate ?? DateTime(0);
-    _focusedDay = widget.selectedDate ?? _today;
-  }
-
-  bool _isToday() =>
-      _selectedDay.year == _today.year &&
-      _selectedDay.month == _today.month &&
-      _selectedDay.day == _today.day;
-
-  DateTime _nextMonday() {
-    final DateTime currentDate = _today;
-    int daysUntilNextMonday = DateTime.monday - currentDate.weekday;
-    if (daysUntilNextMonday <= 0) {
-      daysUntilNextMonday += 7;
+    if (widget.isStartDate) {
+      selectedDatePickerItem = DatePickerItem.today;
+      dateOptions = <DatePickerItem>[
+        DatePickerItem.today,
+        DatePickerItem.nextMonday,
+        DatePickerItem.nextTuesday,
+        DatePickerItem.after1Week,
+      ];
+    } else {
+      selectedDatePickerItem = DatePickerItem.noDate;
+      dateOptions = <DatePickerItem>[
+        DatePickerItem.noDate,
+        DatePickerItem.today,
+      ];
     }
-    return currentDate.add(Duration(days: daysUntilNextMonday));
+    _selectedDate = widget.selectedDate ?? DateTime.now();
   }
-
-  DateTime _nextTuesday() {
-    final DateTime currentDate = _today;
-    int daysUntilNextTuesday = DateTime.tuesday - currentDate.weekday;
-    if (daysUntilNextTuesday <= 0) {
-      daysUntilNextTuesday += 7;
-    }
-    return currentDate.add(Duration(days: daysUntilNextTuesday));
-  }
-
-  DateTime _afterOneWeek() => _today.add(const Duration(days: 7));
-
-  bool _isSelected(DateTime date) => _selectedDay == date;
 
   @override
   Widget build(BuildContext context) => Dialog(
@@ -73,159 +64,71 @@ class _CommonCalendarPickerState extends State<CommonCalendarPicker> {
             mainAxisSize: MainAxisSize.min,
             spacing: 8,
             children: <Widget>[
-              if (widget.isStartDate) ...<Widget>[
-                Row(
-                  spacing: 16,
-                  children: <Widget>[
-                    Expanded(
-                      child: ActionButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedDay = _today;
-                            _focusedDay = _today;
-                          });
-                        },
-                        title: StringConstants.strToday,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        backgroundColor:
-                            _isToday()
-                                ? ThemeColors.clrPrimary
-                                : ThemeColors.clrSecondary,
-                        textColor:
-                            _isToday()
-                                ? ThemeColors.clrWhite
-                                : ThemeColors.clrPrimary,
-                      ),
-                    ),
-                    Expanded(
-                      child: ActionButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedDay = _nextMonday();
-                            _focusedDay = _nextMonday();
-                          });
-                        },
-                        title: StringConstants.strNextMonday,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        backgroundColor:
-                            _isSelected(_nextMonday())
-                                ? ThemeColors.clrPrimary
-                                : ThemeColors.clrSecondary,
-                        textColor:
-                            _isSelected(_nextMonday())
-                                ? ThemeColors.clrWhite
-                                : ThemeColors.clrPrimary,
-                      ),
-                    ),
-                  ],
+              GridView.builder(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(15),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
+                  childAspectRatio: 4,
                 ),
-                Row(
-                  spacing: 16,
-                  children: <Widget>[
-                    Expanded(
+                itemCount: dateOptions.length,
+                itemBuilder:
+                    (BuildContext context, int index) => Expanded(
                       child: ActionButton(
                         onPressed: () {
                           setState(() {
-                            _selectedDay = _nextTuesday();
-                            _focusedDay = _nextTuesday();
+                            selectedDatePickerItem = dateOptions[index];
+                            switch (dateOptions[index]) {
+                              case DatePickerItem.noDate:
+                                _selectedDate = DateTime(0);
+                                break;
+                              case DatePickerItem.today:
+                                _selectedDate = DateTime.now();
+                                break;
+                              case DatePickerItem.nextMonday:
+                                _selectedDate = nextMonday();
+                                break;
+                              case DatePickerItem.nextTuesday:
+                                _selectedDate = nextTuesday();
+                                break;
+                              case DatePickerItem.after1Week:
+                                _selectedDate = afterOneWeek();
+                                break;
+                            }
                           });
                         },
-                        title: StringConstants.strNextTuesday,
+                        title: getDatePickerItemString(dateOptions[index]),
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         backgroundColor:
-                            _isSelected(_nextTuesday())
+                            selectedDatePickerItem == dateOptions[index]
                                 ? ThemeColors.clrPrimary
                                 : ThemeColors.clrSecondary,
                         textColor:
-                            _isSelected(_nextTuesday())
+                            selectedDatePickerItem == dateOptions[index]
                                 ? ThemeColors.clrWhite
                                 : ThemeColors.clrPrimary,
                       ),
                     ),
-                    Expanded(
-                      child: ActionButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedDay = _afterOneWeek();
-                            _focusedDay = _afterOneWeek();
-                          });
-                        },
-                        title: StringConstants.strAfterWeek,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        backgroundColor:
-                            _isSelected(_afterOneWeek())
-                                ? ThemeColors.clrPrimary
-                                : ThemeColors.clrSecondary,
-                        textColor:
-                            _isSelected(_afterOneWeek())
-                                ? ThemeColors.clrWhite
-                                : ThemeColors.clrPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-              ] else
-                Row(
-                  spacing: 16,
-                  children: <Widget>[
-                    Expanded(
-                      child: ActionButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedDay = DateTime(0);
-                            _focusedDay = _today;
-                          });
-                        },
-                        title: StringConstants.strNoDate,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        backgroundColor:
-                            _isSelected(DateTime(0))
-                                ? ThemeColors.clrPrimary
-                                : ThemeColors.clrSecondary,
-                        textColor:
-                            _isSelected(DateTime(0))
-                                ? ThemeColors.clrWhite
-                                : ThemeColors.clrPrimary,
-                      ),
-                    ),
-                    Expanded(
-                      child: ActionButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedDay = _today;
-                            _focusedDay = _today;
-                          });
-                        },
-                        title: StringConstants.strToday,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        backgroundColor:
-                            _isToday()
-                                ? ThemeColors.clrPrimary
-                                : ThemeColors.clrSecondary,
-                        textColor:
-                            _isToday()
-                                ? ThemeColors.clrWhite
-                                : ThemeColors.clrPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-
+              ),
               TableCalendar<dynamic>(
                 firstDay: DateTime.utc(2020),
                 lastDay: DateTime.utc(2030, 12, 31),
-                focusedDay: _focusedDay,
+                focusedDay: DateTime.now(),
                 selectedDayPredicate:
-                    (DateTime day) => isSameDay(_selectedDay, day),
+                    (DateTime day) => isSameDay(
+                      selectedDatePickerItem == DatePickerItem.noDate
+                          ? DateTime(0)
+                          : _selectedDate,
+                      day,
+                    ),
                 onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
                   setState(() {
-                    _selectedDay = selectedDay;
-                    _focusedDay = focusedDay;
+                    _selectedDate = selectedDay;
                   });
                 },
-                onPageChanged: (DateTime focusedDay) {
-                  _focusedDay = focusedDay;
-                },
+                onPageChanged: (DateTime focusedDay) {},
                 headerStyle: const HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
@@ -291,9 +194,9 @@ class _CommonCalendarPickerState extends State<CommonCalendarPicker> {
                     ),
                     Flexible(
                       child: Text(
-                        _selectedDay == DateTime(0)
+                        _selectedDate == DateTime(0)
                             ? StringConstants.strNoDate
-                            : formatToDateMonthYear.format(_selectedDay),
+                            : formatToDateMonthYear.format(_selectedDate),
                         style: const TextStyle(
                           fontSize: FontSize.fontSizeMedium,
                           color: ThemeColors.clrBlack50,
@@ -318,10 +221,6 @@ class _CommonCalendarPickerState extends State<CommonCalendarPicker> {
                   ActionButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      // showSnackBar(
-                      //   context,
-                      //   title: "selected-date-$_selectedDay",
-                      // );
                     },
                     title: StringConstants.strSave,
                   ),
