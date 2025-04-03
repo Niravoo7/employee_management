@@ -1,7 +1,7 @@
-
 class MapConstant {
   static const String mapEmployeeList = "employeeList";
 }
+
 // Project constant text
 class StringConstants {
   static const String appName = "Assignment";
@@ -18,4 +18,7 @@ class StringConstants {
   static const String strNoDate = "No date";
   static const String strSave = "Save";
   static const String strCancel = "Cancel";
+  static const String strNextMonday = "Next Monday";
+  static const String strNextTuesday = "Next Tuesday";
+  static const String strAfterWeek = "After 1 week";
 }
