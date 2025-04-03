@@ -39,13 +39,11 @@ class ManageEmployeeScreen extends StatelessWidget {
                         context: context,
                         useSafeArea: true,
                         shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(16),
                           ),
                         ),
-                        builder:
-                            (BuildContext context) => SelectRoleBottomSheet(),
+                        builder: (_) => SelectRoleBottomSheet(),
                       );
                     },
                     contentPadding: const EdgeInsets.only(left: 12),
@@ -72,15 +70,18 @@ class ManageEmployeeScreen extends StatelessWidget {
                       color: ThemeColors.clrPrimary,
                     ),
                   ),
-                  const Row(
+                  Row(
                     spacing: 20,
                     children: <Widget>[
-                      CommonInputDateField(date: StringConstants.strToday),
-                      ImageIcon(
+                      CommonInputDateField(
+                        date: DateTime.now(),
+                        isStartDate: true,
+                      ),
+                      const ImageIcon(
                         AssetImage(IconConstants.icArrowRight),
                         color: ThemeColors.clrPrimary,
                       ),
-                      CommonInputDateField(date: StringConstants.strNoDate),
+                      const CommonInputDateField(isStartDate: false),
                     ],
                   ),
                 ],
@@ -109,7 +110,7 @@ class ManageEmployeeScreen extends StatelessWidget {
                       _employeeCubit.addEmployee(
                         Employee(
                           employeeName: "abc",
-                          jobRole: "dsfsf",
+                          jobRole: "Flutter Developer",
                           startDate: DateTime.now(),
                         ),
                       );

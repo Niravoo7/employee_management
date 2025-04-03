@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'employee.dart';
+part of "employee.dart";
 
 // **************************************************************************
 // TypeAdapterGenerator
@@ -12,8 +12,8 @@ class EmployeeAdapter extends TypeAdapter<Employee> {
 
   @override
   Employee read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
+    final int numOfFields = reader.readByte();
+    final Map<int, dynamic> fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Employee(

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       ensureScreenSize: true,
       child: MultiBlocProvider(
-        providers: [
+        providers: <SingleChildWidget>[
           BlocProvider<EmployeeCubit>(
             create: (BuildContext context) => getIt<EmployeeCubit>(),
           ),

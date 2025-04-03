@@ -1,5 +1,6 @@
 import "package:assignment/core/constants/image_constants.dart";
 import "package:flutter/material.dart";
+import "package:intl/intl.dart";
 
 /// PreLoading the Images and Icons into the system cache for faster loading
 void preLoadImages(BuildContext context) {
@@ -10,3 +11,5 @@ void preLoadImages(BuildContext context) {
     precacheImage(AssetImage(icon), context);
   }
 }
+
+final DateFormat formatToDateMonthYear = DateFormat("dd MMM yyyy");

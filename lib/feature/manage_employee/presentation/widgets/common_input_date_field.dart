@@ -1,13 +1,15 @@
 import "package:assignment/core/constants/image_constants.dart";
 import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
+import "package:assignment/core/shared/domain/method/methods.dart";
 import "package:assignment/feature/manage_employee/presentation/widgets/common_calendar_picker.dart";
 import "package:flutter/material.dart";
 
 class CommonInputDateField extends StatelessWidget {
-  const CommonInputDateField({required this.date, super.key});
+  const CommonInputDateField({required this.isStartDate, this.date, super.key});
 
-  final String date;
+  final DateTime? date;
+  final bool isStartDate;
 
   @override
   Widget build(BuildContext context) => Expanded(
@@ -15,7 +17,11 @@ class CommonInputDateField extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (BuildContext context) => const CommonCalendarPicker(),
+          builder:
+              (BuildContext context) => CommonCalendarPicker(
+                isStartDate: isStartDate,
+                selectedDate: date,
+              ),
         );
       },
       child: Container(
@@ -33,11 +39,13 @@ class CommonInputDateField extends StatelessWidget {
               color: ThemeColors.clrPrimary,
             ),
             Text(
-              date,
+              date != null
+                  ? formatToDateMonthYear.format(date!)
+                  : StringConstants.strNoDate,
               style: TextStyle(
                 fontSize: FontSize.fontSizeRegular,
                 color:
-                    date == StringConstants.strNoDate
+                    date == null
                         ? ThemeColors.clrGray100
                         : ThemeColors.clrBlack50,
               ),
