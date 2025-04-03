@@ -17,6 +17,9 @@ class CommonInputDateField extends StatefulWidget {
 }
 
 class _CommonInputDateFieldState extends State<CommonInputDateField> {
+  late DateTime selectedDateTime =
+      (widget.isStartDate) ? DateTime.now() : DateTime(0);
+
   @override
   Widget build(BuildContext context) => Expanded(
     child: GestureDetector(
@@ -26,9 +29,9 @@ class _CommonInputDateFieldState extends State<CommonInputDateField> {
           builder:
               (BuildContext context) => CommonCalendarPicker(
                 isStartDate: widget.isStartDate,
-                selectedDate: widget.dateTime,
+                selectedDate: selectedDateTime,
                 onDateSelected: (DateTime dateTime) {
-                  widget.dateTime = dateTime;
+                  selectedDateTime = dateTime;
                   setState(() {});
                 },
               ),
@@ -49,15 +52,15 @@ class _CommonInputDateFieldState extends State<CommonInputDateField> {
               color: ThemeColors.clrPrimary,
             ),
             Text(
-              widget.dateTime != null
-                  ? isToday(widget.dateTime!)
+              selectedDateTime != DateTime(0)
+                  ? isToday(selectedDateTime)
                       ? StringConstants.strToday
-                      : formatToDateMonthYear.format(widget.dateTime!)
+                      : formatToDateMonthYear.format(selectedDateTime)
                   : StringConstants.strNoDate,
               style: TextStyle(
                 fontSize: FontSize.fontSizeRegular,
                 color:
-                    widget.dateTime == null
+                    selectedDateTime == DateTime(0)
                         ? ThemeColors.clrGray100
                         : ThemeColors.clrBlack50,
               ),

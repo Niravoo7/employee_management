@@ -18,7 +18,7 @@ class CommonCalendarPicker extends StatefulWidget {
   });
 
   final bool isStartDate;
-  final DateTime? selectedDate;
+  final DateTime selectedDate;
   final Function(DateTime) onDateSelected;
 
   @override
@@ -33,8 +33,9 @@ class _CommonCalendarPickerState extends State<CommonCalendarPicker> {
   @override
   void initState() {
     super.initState();
+    _selectedDate = widget.selectedDate;
+    setDatePickerItem();
     if (widget.isStartDate) {
-      selectedDatePickerItem = DatePickerItem.today;
       dateOptions = <DatePickerItem>[
         DatePickerItem.today,
         DatePickerItem.nextMonday,
@@ -42,13 +43,25 @@ class _CommonCalendarPickerState extends State<CommonCalendarPicker> {
         DatePickerItem.after1Week,
       ];
     } else {
-      selectedDatePickerItem = DatePickerItem.noDate;
       dateOptions = <DatePickerItem>[
         DatePickerItem.noDate,
         DatePickerItem.today,
       ];
     }
-    _selectedDate = widget.selectedDate ?? DateTime.now();
+  }
+
+  void setDatePickerItem() {
+    if (isToday(_selectedDate)) {
+      selectedDatePickerItem = DatePickerItem.today;
+    } else if (isSameDay(nextMonday(), _selectedDate)) {
+      selectedDatePickerItem = DatePickerItem.nextMonday;
+    } else if (isSameDay(nextTuesday(), _selectedDate)) {
+      selectedDatePickerItem = DatePickerItem.nextTuesday;
+    } else if (isSameDay(afterOneWeek(), _selectedDate)) {
+      selectedDatePickerItem = DatePickerItem.after1Week;
+    } else {
+      selectedDatePickerItem = DatePickerItem.noDate;
+    }
   }
 
   @override
@@ -117,17 +130,14 @@ class _CommonCalendarPickerState extends State<CommonCalendarPicker> {
                 lastDay: DateTime.utc(2030, 12, 31),
                 focusedDay: DateTime.now(),
                 selectedDayPredicate:
-                    (DateTime day) => isSameDay(
-                      selectedDatePickerItem == DatePickerItem.noDate
-                          ? DateTime(0)
-                          : _selectedDate,
-                      day,
-                    ),
+                    (DateTime day) => isSameDay(_selectedDate, day),
                 onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
                   setState(() {
                     _selectedDate = selectedDay;
+                    setDatePickerItem();
                   });
                 },
+
                 onPageChanged: (DateTime focusedDay) {},
                 headerStyle: const HeaderStyle(
                   formatButtonVisible: false,
@@ -220,6 +230,7 @@ class _CommonCalendarPickerState extends State<CommonCalendarPicker> {
                   ),
                   ActionButton(
                     onPressed: () {
+                      widget.onDateSelected(_selectedDate);
                       Navigator.pop(context);
                     },
                     title: StringConstants.strSave,

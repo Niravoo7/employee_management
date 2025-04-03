@@ -47,3 +47,10 @@ String getDatePickerItemString(DatePickerItem datePickerItem) {
       return StringConstants.strAfterWeek;
   }
 }
+
+final List<String> employeeRoleList = <String>[
+  StringConstants.strProductDesigner,
+  StringConstants.strFlutterDeveloper,
+  StringConstants.strQATester,
+  StringConstants.strProductOwner,
+];

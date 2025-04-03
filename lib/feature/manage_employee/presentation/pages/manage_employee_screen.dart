@@ -10,23 +10,31 @@ import "package:assignment/feature/manage_employee/presentation/widgets/select_r
 import "package:assignment/injection_container/injection_container.dart";
 import "package:flutter/material.dart";
 
-class ManageEmployeeScreen extends StatelessWidget {
-  ManageEmployeeScreen({super.key, this.employee});
+class ManageEmployeeScreen extends StatefulWidget {
+  const ManageEmployeeScreen({this.employee, super.key});
 
   final Employee? employee;
 
+  @override
+  State<ManageEmployeeScreen> createState() => _ManageEmployeeScreenState();
+}
+
+class _ManageEmployeeScreenState extends State<ManageEmployeeScreen> {
   final EmployeeCubit _employeeCubit = getIt<EmployeeCubit>();
+  TextEditingController employeeName = TextEditingController();
+
+  String? selectedJobRole;
 
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       title: Text(
-        employee == null
+        widget.employee == null
             ? StringConstants.strAddEmployeeDetails
             : StringConstants.strEditEmployeeDetails,
       ),
       actions: <Widget>[
-        if (employee != null)
+        if (widget.employee != null)
           Padding(
             padding: const EdgeInsets.only(right: 5),
             child: IconButton(
@@ -46,7 +54,7 @@ class ManageEmployeeScreen extends StatelessWidget {
                 spacing: 20,
                 children: <Widget>[
                   CommonTextField(
-                    controller: TextEditingController(),
+                    controller: employeeName,
                     prefixIcon: Icons.person_outline_sharp,
                     hint: StringConstants.strEmployeeName,
                     textInputAction: TextInputAction.done,
@@ -61,7 +69,13 @@ class ManageEmployeeScreen extends StatelessWidget {
                             top: Radius.circular(16),
                           ),
                         ),
-                        builder: (_) => SelectRoleBottomSheet(),
+                        builder:
+                            (_) => SelectRoleBottomSheet(
+                              selectedJobRole: (String jobRole) {
+                                selectedJobRole = jobRole;
+                                setState(() {});
+                              },
+                            ),
                       );
                     },
                     contentPadding: const EdgeInsets.only(left: 12),
@@ -75,11 +89,14 @@ class ManageEmployeeScreen extends StatelessWidget {
                       size: 25,
                       color: ThemeColors.clrPrimary,
                     ),
-                    title: const Text(
-                      StringConstants.strSelectRole,
+                    title: Text(
+                      selectedJobRole ?? StringConstants.strSelectRole,
                       style: TextStyle(
                         fontSize: FontSize.fontSizeMedium,
-                        color: ThemeColors.clrGray100,
+                        color:
+                            (selectedJobRole != null)
+                                ? ThemeColors.clrBlack50
+                                : ThemeColors.clrGray100,
                       ),
                     ),
                     trailing: const Icon(
@@ -92,7 +109,7 @@ class ManageEmployeeScreen extends StatelessWidget {
                     spacing: 20,
                     children: <Widget>[
                       CommonInputDateField(
-                        dateTime: employee?.startDate ?? DateTime.now(),
+                        dateTime: widget.employee?.startDate ?? DateTime.now(),
                         isStartDate: true,
                       ),
                       const ImageIcon(
@@ -100,7 +117,7 @@ class ManageEmployeeScreen extends StatelessWidget {
                         color: ThemeColors.clrPrimary,
                       ),
                       CommonInputDateField(
-                        dateTime: employee?.endDate,
+                        dateTime: widget.employee?.endDate ?? DateTime(0),
                         isStartDate: false,
                       ),
                     ],

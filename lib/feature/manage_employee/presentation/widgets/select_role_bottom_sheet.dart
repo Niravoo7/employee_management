@@ -3,14 +3,9 @@ import "package:assignment/core/constants/theme_constants.dart";
 import "package:flutter/material.dart";
 
 class SelectRoleBottomSheet extends StatelessWidget {
-  SelectRoleBottomSheet({super.key});
+  const SelectRoleBottomSheet({required this.selectedJobRole, super.key});
 
-  final List<String> employeeRoleList = <String>[
-    StringConstants.strProductDesigner,
-    StringConstants.strFlutterDeveloper,
-    StringConstants.strQATester,
-    StringConstants.strProductOwner,
-  ];
+  final Function(String) selectedJobRole;
 
   @override
   Widget build(BuildContext context) => ListView.separated(
@@ -19,7 +14,10 @@ class SelectRoleBottomSheet extends StatelessWidget {
     itemCount: employeeRoleList.length,
     itemBuilder:
         (BuildContext context, int index) => InkWell(
-          onTap: () {},
+          onTap: () {
+            selectedJobRole(employeeRoleList[index]);
+            Navigator.pop(context);
+          },
           child: Container(
             padding: const EdgeInsets.all(16),
             child: Text(
