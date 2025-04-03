@@ -2,8 +2,8 @@ import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
 import "package:flutter/material.dart";
 
-class SelectRoleSheet extends StatelessWidget {
-  SelectRoleSheet({super.key});
+class SelectRoleBottomSheet extends StatelessWidget {
+  SelectRoleBottomSheet({super.key});
 
   final List<String> employeeRoleList = <String>[
     StringConstants.strProductDesigner,

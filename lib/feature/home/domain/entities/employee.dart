@@ -1,13 +1,22 @@
+import "package:hive/hive.dart";
+
+part "employee.g.dart";
+
+@HiveType(typeId: 0)
 class Employee {
   Employee({
-    required this.name,
+    required this.employeeName,
     required this.jobRole,
-    required this.joinDate,
-    this.leaveDate,
+    required this.startDate,
+    this.endDate,
   });
 
-  final String name;
+  @HiveField(0)
+  final String employeeName;
+  @HiveField(1)
   final String jobRole;
-  final DateTime joinDate;
-  final DateTime? leaveDate;
+  @HiveField(2)
+  final DateTime startDate;
+  @HiveField(3)
+  final DateTime? endDate;
 }

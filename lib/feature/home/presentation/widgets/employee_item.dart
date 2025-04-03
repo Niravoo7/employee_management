@@ -2,8 +2,8 @@ import "package:assignment/core/constants/image_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
 import "package:flutter/material.dart";
 
-class EmployeeTile extends StatelessWidget {
-  const EmployeeTile({required this.index, super.key});
+class EmployeeItem extends StatelessWidget {
+  const EmployeeItem({required this.index, super.key});
 
   final int index;
   @override

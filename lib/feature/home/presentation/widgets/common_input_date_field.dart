@@ -3,8 +3,8 @@ import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
 import "package:flutter/material.dart";
 
-class CommonInputDate extends StatelessWidget {
-  const CommonInputDate({required this.date, super.key});
+class CommonInputDateField extends StatelessWidget {
+  const CommonInputDateField({required this.date, super.key});
 
   final String date;
 

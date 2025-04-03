@@ -3,12 +3,12 @@ import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
 import "package:assignment/core/shared/presentation/widget/action_button.dart";
 import "package:assignment/core/shared/presentation/widget/text_field.dart";
-import "package:assignment/feature/home/presentation/widgets/common_input_date.dart";
-import "package:assignment/feature/home/presentation/widgets/select_role_sheet.dart";
+import "package:assignment/feature/home/presentation/widgets/common_input_date_field.dart";
+import "package:assignment/feature/home/presentation/widgets/select_role_bottom_sheet.dart";
 import "package:flutter/material.dart";
 
-class AddDetailsScreen extends StatelessWidget {
-  const AddDetailsScreen({super.key});
+class ManageEmployeeScreen extends StatelessWidget {
+  const ManageEmployeeScreen({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -39,7 +39,7 @@ class AddDetailsScreen extends StatelessWidget {
                             topRight: Radius.circular(16),
                           ),
                         ),
-                        builder: (BuildContext context) => SelectRoleSheet(),
+                        builder: (BuildContext context) => SelectRoleBottomSheet(),
                       );
                     },
                     contentPadding: const EdgeInsets.only(left: 12),
@@ -69,12 +69,12 @@ class AddDetailsScreen extends StatelessWidget {
                   const Row(
                     spacing: 20,
                     children: <Widget>[
-                      CommonInputDate(date: StringConstants.strToday),
+                      CommonInputDateField(date: StringConstants.strToday),
                       ImageIcon(
                         AssetImage(IconConstants.icArrowRight),
                         color: ThemeColors.clrPrimary,
                       ),
-                      CommonInputDate(date: StringConstants.strNoDate),
+                      CommonInputDateField(date: StringConstants.strNoDate),
                     ],
                   ),
                 ],

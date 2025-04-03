@@ -1,13 +1,13 @@
 import "package:assignment/core/constants/image_constants.dart";
 import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
-import "package:assignment/feature/home/presentation/widgets/employee_tile.dart";
+import "package:assignment/feature/home/presentation/widgets/employee_item.dart";
 import "package:assignment/routes/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class EmployeeListScreen extends StatelessWidget {
+  const EmployeeListScreen({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                 itemCount: 10,
                 itemBuilder:
                     (BuildContext context, int index) =>
-                        EmployeeTile(index: index),
+                        EmployeeItem(index: index),
                 separatorBuilder:
                     (BuildContext context, int index) =>
                         const Divider(height: 0, color: ThemeColors.clrWhite50),

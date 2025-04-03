@@ -18,12 +18,17 @@ dependencies:
   equatable: ^2.0.7
   flutter_screenutil: ^5.9.3
   table_calendar: ^3.2.0
+  get_it: ^8.0.3
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^5.0.0
+  build_runner: ^2.1.1
+  hive_generator: ^1.1.1
 
 flutter:
 

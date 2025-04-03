@@ -1,3 +1,7 @@
+
+class MapConstant {
+  static const String mapEmployeeList = "employeeList";
+}
 // Project constant text
 class StringConstants {
   static const String appName = "Assignment";
