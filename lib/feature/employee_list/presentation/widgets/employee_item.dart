@@ -68,10 +68,13 @@ class EmployeeItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      employee.jobRole,
-                      style: const TextStyle(
+                      employee.jobRole ?? StringConstants.strSelectRole,
+                      style: TextStyle(
                         fontSize: FontSize.fontSizeRegular,
-                        color: ThemeColors.clrGray100,
+                        color:
+                            employee.jobRole == null
+                                ? ThemeColors.clrBlack50
+                                : ThemeColors.clrGray100,
                       ),
                     ),
                     Text(

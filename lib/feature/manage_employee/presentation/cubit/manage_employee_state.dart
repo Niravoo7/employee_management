@@ -1,13 +1,11 @@
+import "package:assignment/feature/employee_list/domain/entities/employee.dart";
+
 abstract class ManageEmployeeState {}
 
 class ManageEmployeeInitial extends ManageEmployeeState {}
 
-class ManageEmployeeLoading extends ManageEmployeeState {}
+class ManageEmployeeModified extends ManageEmployeeState {
+  ManageEmployeeModified(this.employee);
 
-class ManageEmployeeLoaded extends ManageEmployeeState {}
-
-class ManageEmployeeError extends ManageEmployeeState {
-  ManageEmployeeError(this.message);
-
-  final String message;
+  final Employee employee;
 }

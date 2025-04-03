@@ -17,7 +17,7 @@ class Employee {
   @HiveField(1)
   String employeeName;
   @HiveField(2)
-  String jobRole;
+  String? jobRole;
   @HiveField(3)
   DateTime startDate;
   @HiveField(4)
