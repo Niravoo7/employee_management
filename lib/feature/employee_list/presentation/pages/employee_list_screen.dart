@@ -1,9 +1,12 @@
 import "package:assignment/core/constants/image_constants.dart";
 import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
-import "package:assignment/feature/home/presentation/widgets/employee_item.dart";
+import "package:assignment/feature/employee_list/presentation/cubit/employee_cubit.dart";
+import "package:assignment/feature/employee_list/presentation/cubit/employee_state.dart";
+import "package:assignment/feature/employee_list/presentation/widgets/employee_item.dart";
 import "package:assignment/routes/app_routes.dart";
 import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 
 class EmployeeListScreen extends StatelessWidget {
@@ -13,9 +16,15 @@ class EmployeeListScreen extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: ThemeColors.clrWhite50,
     appBar: AppBar(title: const Text(StringConstants.strEmployeeList)),
-    body:
-        true
-            ? Center(
+    body: BlocBuilder<EmployeeCubit, EmployeeState>(
+      builder: (BuildContext context, EmployeeState state) {
+        if (state is EmployeeLoading) {
+          return const SizedBox.shrink();
+        }
+
+        if (state is EmployeeLoaded) {
+          if (state.employees.isEmpty) {
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -34,21 +43,28 @@ class EmployeeListScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            )
-            : Container(
+            );
+          } else {
+            return Container(
               color: ThemeColors.clrWhite,
               child: ListView.separated(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
-                itemCount: 10,
+                itemCount: state.employees.length,
                 itemBuilder:
                     (BuildContext context, int index) =>
-                        EmployeeItem(index: index),
+                        EmployeeItem(employee: state.employees[index]),
                 separatorBuilder:
                     (BuildContext context, int index) =>
                         const Divider(height: 0, color: ThemeColors.clrWhite50),
               ),
-            ),
+            );
+          }
+        }
+
+        return const SizedBox.shrink();
+      },
+    ),
     floatingActionButton: FloatingActionButton(
       onPressed: () {
         Navigator.pushNamed(context, AppRoutes.addDetailsRoute);

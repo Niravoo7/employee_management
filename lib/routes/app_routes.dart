@@ -1,5 +1,5 @@
-import "package:assignment/feature/home/presentation/pages/manage_employee_screen.dart";
-import "package:assignment/feature/home/presentation/pages/employee_list_screen.dart";
+import "package:assignment/feature/employee_list/presentation/pages/employee_list_screen.dart";
+import "package:assignment/feature/manage_employee/presentation/pages/manage_employee_screen.dart";
 import "package:flutter/material.dart";
 
 class AppRoutes {
@@ -9,13 +9,17 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homeRoute:
-        return MaterialPageRoute<dynamic>(builder: (_) => const EmployeeListScreen());
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const EmployeeListScreen(),
+        );
       case addDetailsRoute:
         return MaterialPageRoute<dynamic>(
-          builder: (_) => const ManageEmployeeScreen(),
+          builder: (_) => ManageEmployeeScreen(),
         );
       default:
-        return MaterialPageRoute<dynamic>(builder: (_) => const EmployeeListScreen());
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const EmployeeListScreen(),
+        );
     }
   }
 }

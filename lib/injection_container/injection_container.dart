@@ -1,5 +1,7 @@
 import "package:assignment/core/constants/string_constants.dart";
-import "package:assignment/feature/home/domain/entities/employee.dart";
+import "package:assignment/feature/employee_list/domain/entities/employee.dart";
+import "package:assignment/feature/employee_list/presentation/cubit/employee_cubit.dart";
+import "package:assignment/feature/manage_employee/presentation/cubit/manage_employee_cubit.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:get_it/get_it.dart";
@@ -15,10 +17,14 @@ Future<void> init() async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
   ]);
+
+  getIt
+    ..registerSingleton<EmployeeCubit>(EmployeeCubit())
+    ..registerSingleton<ManageEmployeeCubit>(ManageEmployeeCubit());
 }
 
 Future<void> registerHive() async {
   Hive.registerAdapter(EmployeeAdapter());
 
-  await Hive.openBox<List<Employee>>(MapConstant.mapEmployeeList);
+  await Hive.openBox<Employee>(MapConstant.mapEmployeeList);
 }

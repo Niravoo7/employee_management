@@ -3,12 +3,17 @@ import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
 import "package:assignment/core/shared/presentation/widget/action_button.dart";
 import "package:assignment/core/shared/presentation/widget/text_field.dart";
-import "package:assignment/feature/home/presentation/widgets/common_input_date_field.dart";
-import "package:assignment/feature/home/presentation/widgets/select_role_bottom_sheet.dart";
+import "package:assignment/feature/employee_list/domain/entities/employee.dart";
+import "package:assignment/feature/employee_list/presentation/cubit/employee_cubit.dart";
+import "package:assignment/feature/manage_employee/presentation/widgets/common_input_date_field.dart";
+import "package:assignment/feature/manage_employee/presentation/widgets/select_role_bottom_sheet.dart";
+import "package:assignment/injection_container/injection_container.dart";
 import "package:flutter/material.dart";
 
 class ManageEmployeeScreen extends StatelessWidget {
-  const ManageEmployeeScreen({super.key});
+  ManageEmployeeScreen({super.key});
+
+  final EmployeeCubit _employeeCubit = getIt<EmployeeCubit>();
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -39,7 +44,8 @@ class ManageEmployeeScreen extends StatelessWidget {
                             topRight: Radius.circular(16),
                           ),
                         ),
-                        builder: (BuildContext context) => SelectRoleBottomSheet(),
+                        builder:
+                            (BuildContext context) => SelectRoleBottomSheet(),
                       );
                     },
                     contentPadding: const EdgeInsets.only(left: 12),
@@ -99,7 +105,15 @@ class ManageEmployeeScreen extends StatelessWidget {
                     textColor: ThemeColors.clrPrimary,
                   ),
                   ActionButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _employeeCubit.addEmployee(
+                        Employee(
+                          employeeName: "abc",
+                          jobRole: "dsfsf",
+                          startDate: DateTime.now(),
+                        ),
+                      );
+                    },
                     title: StringConstants.strSave,
                   ),
                 ],

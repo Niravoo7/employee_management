@@ -1,17 +1,18 @@
 import "package:assignment/core/constants/image_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
+import "package:assignment/feature/employee_list/domain/entities/employee.dart";
 import "package:flutter/material.dart";
 
 class EmployeeItem extends StatelessWidget {
-  const EmployeeItem({required this.index, super.key});
+  const EmployeeItem({required this.employee, super.key});
 
-  final int index;
+  final Employee employee;
+
   @override
   Widget build(BuildContext context) => Dismissible(
-    key: Key(index.toString()),
+    key: Key(employee.employeeId ?? ""),
     direction: DismissDirection.endToStart,
     onDismissed: (DismissDirection direction) {},
-
     background: const SizedBox.shrink(),
     secondaryBackground: Container(
       padding: const EdgeInsets.only(right: 20),
@@ -23,30 +24,30 @@ class EmployeeItem extends StatelessWidget {
         size: 28,
       ),
     ),
-    child: const Padding(
-      padding: EdgeInsets.all(16),
+    child: Padding(
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 6,
         children: <Widget>[
           Text(
-            "name",
-            style: TextStyle(
+            employee.employeeName,
+            style: const TextStyle(
               fontSize: FontSize.fontSizeMedium,
               fontWeight: FontWeight.w500,
               color: ThemeColors.clrBlack50,
             ),
           ),
           Text(
-            "job role",
-            style: TextStyle(
+            employee.jobRole,
+            style: const TextStyle(
               fontSize: FontSize.fontSizeRegular,
               color: ThemeColors.clrGray100,
             ),
           ),
           Text(
-            "time",
-            style: TextStyle(
+            employee.startDate.toString(),
+            style: const TextStyle(
               fontSize: FontSize.fontSizeSmall,
               color: ThemeColors.clrGray100,
             ),

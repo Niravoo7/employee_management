@@ -1,11 +1,14 @@
 import "package:assignment/core/constants/string_constants.dart";
-import "package:assignment/feature/home/domain/entities/employee.dart";
-import "package:assignment/feature/home/presentation/cubit/employee_state.dart";
+import "package:assignment/feature/employee_list/domain/entities/employee.dart";
+import "package:assignment/feature/employee_list/presentation/cubit/employee_state.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:hive/hive.dart";
 
 class EmployeeCubit extends Cubit<EmployeeState> {
-  EmployeeCubit() : super(EmployeeInitial());
+  EmployeeCubit() : super(EmployeeInitial()) {
+    // Automatically load employees when the cubit is created
+    loadEmployees();
+  }
 
   // Hive box for Employee
   late Box<Employee> employeeBox;
