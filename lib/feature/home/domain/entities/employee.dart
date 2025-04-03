@@ -8,15 +8,18 @@ class Employee {
     required this.employeeName,
     required this.jobRole,
     required this.startDate,
+    this.employeeId,
     this.endDate,
   });
 
   @HiveField(0)
-  final String employeeName;
+  String? employeeId;
   @HiveField(1)
-  final String jobRole;
+  String employeeName;
   @HiveField(2)
-  final DateTime startDate;
+  String jobRole;
   @HiveField(3)
-  final DateTime? endDate;
+  DateTime startDate;
+  @HiveField(4)
+  DateTime? endDate;
 }

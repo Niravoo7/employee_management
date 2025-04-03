@@ -17,24 +17,27 @@ class EmployeeAdapter extends TypeAdapter<Employee> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Employee(
-      employeeName: fields[0] as String,
-      jobRole: fields[1] as String,
-      startDate: fields[2] as DateTime,
-      endDate: fields[3] as DateTime?,
+      employeeName: fields[1] as String,
+      jobRole: fields[2] as String,
+      startDate: fields[3] as DateTime,
+      employeeId: fields[0] as String?,
+      endDate: fields[4] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Employee obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.employeeName)
+      ..write(obj.employeeId)
       ..writeByte(1)
-      ..write(obj.jobRole)
+      ..write(obj.employeeName)
       ..writeByte(2)
-      ..write(obj.startDate)
+      ..write(obj.jobRole)
       ..writeByte(3)
+      ..write(obj.startDate)
+      ..writeByte(4)
       ..write(obj.endDate);
   }
 
