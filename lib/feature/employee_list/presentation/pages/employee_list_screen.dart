@@ -61,7 +61,9 @@ class EmployeeListScreen extends StatelessWidget {
                       ..forEach((Employee employee) {
                         employee.isLastItem = false;
                       });
-                currentList.last.isLastItem = true;
+                if (currentList.length > 1) {
+                  currentList.last.isLastItem = true;
+                }
                 final List<Employee> previousList =
                     state.employees
                         .where((Employee element) => element.endDate != null)
@@ -69,7 +71,9 @@ class EmployeeListScreen extends StatelessWidget {
                       ..forEach((Employee employee) {
                         employee.isLastItem = false;
                       });
-                previousList.last.isLastItem = true;
+                if (previousList.length > 1) {
+                  previousList.last.isLastItem = true;
+                }
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
