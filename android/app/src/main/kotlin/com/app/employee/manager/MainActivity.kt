@@ -1,4 +1,4 @@
-package com.app.assignment
+package com.app.employee.manager
 
 import io.flutter.embedding.android.FlutterActivity
 
