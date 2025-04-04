@@ -4,13 +4,16 @@ import "package:assignment/core/constants/theme_constants.dart";
 import "package:assignment/core/shared/domain/method/methods.dart";
 import "package:assignment/core/utils/utils.dart";
 import "package:assignment/feature/employee_list/domain/entities/employee.dart";
+import "package:assignment/feature/employee_list/presentation/cubit/employee_cubit.dart";
+import "package:assignment/injection_container/injection_container.dart";
 import "package:assignment/routes/app_routes.dart";
 import "package:flutter/material.dart";
 
 class EmployeeItem extends StatelessWidget {
-  const EmployeeItem({required this.employee, super.key});
+  EmployeeItem({required this.employee, super.key});
 
   final Employee employee;
+  final EmployeeCubit _employeeCubit = getIt<EmployeeCubit>();
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -32,11 +35,14 @@ class EmployeeItem extends StatelessWidget {
               key: Key(employee.employeeId ?? ""),
               direction: DismissDirection.endToStart,
               onDismissed: (DismissDirection direction) {
+                _employeeCubit.deleteEmployee(employee.employeeId ?? "");
                 showSnackBar(
                   context,
                   title: StringConstants.strEmployeeDataHasBeenDeleted,
                   action: SnackBarAction(
-                    onPressed: () {},
+                    onPressed: () {
+                      _employeeCubit.addEmployee(employee);
+                    },
                     label: StringConstants.strUndo,
                     textColor: ThemeColors.clrPrimary,
                   ),

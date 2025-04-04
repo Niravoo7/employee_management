@@ -9,18 +9,14 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homeRoute:
-        return MaterialPageRoute<dynamic>(
-          builder: (_) => const EmployeeListScreen(),
-        );
+        return MaterialPageRoute<dynamic>(builder: (_) => EmployeeListScreen());
       case addDetailsRoute:
         final dynamic employee = settings.arguments;
         return MaterialPageRoute<dynamic>(
           builder: (_) => ManageEmployeeScreen(employee: employee),
         );
       default:
-        return MaterialPageRoute<dynamic>(
-          builder: (_) => const EmployeeListScreen(),
-        );
+        return MaterialPageRoute<dynamic>(builder: (_) => EmployeeListScreen());
     }
   }
 }
