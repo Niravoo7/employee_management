@@ -78,33 +78,28 @@ class _CommonCalendarPickerState extends State<CommonCalendarPicker> {
                           ),
                       itemCount: dateOptions.length,
                       itemBuilder:
-                          (BuildContext context, int index) => Expanded(
-                            child: ActionButton(
-                              onPressed: () {
-                                _calenderCubit
-                                    .setSelectedDateFromDatePickerItem(
-                                      dateOptions[index],
-                                    );
-                              },
-                              title: getDatePickerItemString(
+                          (BuildContext context, int index) => ActionButton(
+                            onPressed: () {
+                              _calenderCubit.setSelectedDateFromDatePickerItem(
                                 dateOptions[index],
-                              ),
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              backgroundColor:
-                                  _calenderCubit
-                                              .calenderParams
-                                              .selectedDatePickerItem ==
-                                          dateOptions[index]
-                                      ? ThemeColors.clrPrimary
-                                      : ThemeColors.clrSecondary,
-                              textColor:
-                                  _calenderCubit
-                                              .calenderParams
-                                              .selectedDatePickerItem ==
-                                          dateOptions[index]
-                                      ? ThemeColors.clrWhite
-                                      : ThemeColors.clrPrimary,
-                            ),
+                              );
+                            },
+                            title: getDatePickerItemString(dateOptions[index]),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            backgroundColor:
+                                _calenderCubit
+                                            .calenderParams
+                                            .selectedDatePickerItem ==
+                                        dateOptions[index]
+                                    ? ThemeColors.clrPrimary
+                                    : ThemeColors.clrSecondary,
+                            textColor:
+                                _calenderCubit
+                                            .calenderParams
+                                            .selectedDatePickerItem ==
+                                        dateOptions[index]
+                                    ? ThemeColors.clrWhite
+                                    : ThemeColors.clrPrimary,
                           ),
                     ),
                     TableCalendar<dynamic>(
