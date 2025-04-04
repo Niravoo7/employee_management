@@ -58,7 +58,6 @@ class EmployeeListScreen extends StatelessWidget {
                     state.employees
                         .where((Employee element) => element.endDate == null)
                         .toList();
-
                 final List<Employee> previousList =
                     state.employees
                         .where((Employee element) => element.endDate != null)
@@ -70,46 +69,48 @@ class EmployeeListScreen extends StatelessWidget {
                     Expanded(
                       child: ListView(
                         children: <Widget>[
-                          ExpansionTile(
-                            childrenPadding: EdgeInsets.zero,
-                            showTrailingIcon: false,
-                            initiallyExpanded: true,
-                            title: const Text(
-                              StringConstants.strCurrentEmployees,
-                              style: TextStyle(
-                                fontSize: FontSize.fontSizeMedium,
-                                fontWeight: FontWeight.w500,
-                                color: ThemeColors.clrPrimary,
+                          if (currentList.isNotEmpty)
+                            ExpansionTile(
+                              childrenPadding: EdgeInsets.zero,
+                              showTrailingIcon: false,
+                              initiallyExpanded: true,
+                              title: const Text(
+                                StringConstants.strCurrentEmployees,
+                                style: TextStyle(
+                                  fontSize: FontSize.fontSizeMedium,
+                                  fontWeight: FontWeight.w500,
+                                  color: ThemeColors.clrPrimary,
+                                ),
                               ),
+                              children:
+                                  currentList
+                                      .map(
+                                        (Employee item) =>
+                                            EmployeeItem(employee: item),
+                                      )
+                                      .toList(),
                             ),
-                            children:
-                                currentList
-                                    .map(
-                                      (Employee item) =>
-                                          EmployeeItem(employee: item),
-                                    )
-                                    .toList(),
-                          ),
-                          ExpansionTile(
-                            childrenPadding: EdgeInsets.zero,
-                            showTrailingIcon: false,
-                            initiallyExpanded: true,
-                            title: const Text(
-                              StringConstants.strPreviousEmployees,
-                              style: TextStyle(
-                                fontSize: FontSize.fontSizeMedium,
-                                fontWeight: FontWeight.w500,
-                                color: ThemeColors.clrPrimary,
+                          if (previousList.isNotEmpty)
+                            ExpansionTile(
+                              childrenPadding: EdgeInsets.zero,
+                              showTrailingIcon: false,
+                              initiallyExpanded: true,
+                              title: const Text(
+                                StringConstants.strPreviousEmployees,
+                                style: TextStyle(
+                                  fontSize: FontSize.fontSizeMedium,
+                                  fontWeight: FontWeight.w500,
+                                  color: ThemeColors.clrPrimary,
+                                ),
                               ),
+                              children:
+                                  previousList
+                                      .map(
+                                        (Employee item) =>
+                                            EmployeeItem(employee: item),
+                                      )
+                                      .toList(),
                             ),
-                            children:
-                                previousList
-                                    .map(
-                                      (Employee item) =>
-                                          EmployeeItem(employee: item),
-                                    )
-                                    .toList(),
-                          ),
                         ],
                       ),
                     ),

@@ -31,6 +31,8 @@ class StringConstants {
   static const String strUndo = "Undo";
   static const String strEditEmployeeDetails = "Edit Employee Details";
   static const String strFrom = "From";
+  static const String strEmployeeNameRequired = "Employee name required!";
+  static const String strEmployeeJobPostRequired = "Employee job post required!";
 }
 
 String getDatePickerItemString(DatePickerItem datePickerItem) {

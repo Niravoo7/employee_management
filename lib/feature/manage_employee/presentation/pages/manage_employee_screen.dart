@@ -3,6 +3,7 @@ import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
 import "package:assignment/core/shared/presentation/widget/action_button.dart";
 import "package:assignment/core/shared/presentation/widget/text_field.dart";
+import "package:assignment/core/utils/utils.dart";
 import "package:assignment/feature/employee_list/domain/entities/employee.dart";
 import "package:assignment/feature/employee_list/presentation/cubit/employee_cubit.dart";
 import "package:assignment/feature/manage_employee/presentation/cubit/manage_employee_cubit.dart";
@@ -180,13 +181,32 @@ class _ManageEmployeeScreenState extends State<ManageEmployeeScreen> {
                         ),
                         ActionButton(
                           onPressed: () {
-                            _manageEmployeeCubit.setEmployeeName(
-                              employeeNameController.text,
-                            );
-                            _employeeCubit.addEmployee(
-                              _manageEmployeeCubit.manageEmployee,
-                            );
-                            Navigator.pop(context);
+                            if (employeeNameController.text.isEmpty ||
+                                employeeNameController.text == "") {
+                              showSnackBar(
+                                context,
+                                title: StringConstants.strEmployeeNameRequired,
+                              );
+                            } else if (_manageEmployeeCubit
+                                        .manageEmployee
+                                        .jobRole ==
+                                    null ||
+                                _manageEmployeeCubit.manageEmployee.jobRole ==
+                                    "") {
+                              showSnackBar(
+                                context,
+                                title:
+                                    StringConstants.strEmployeeJobPostRequired,
+                              );
+                            } else {
+                              _manageEmployeeCubit.setEmployeeName(
+                                employeeNameController.text,
+                              );
+                              _employeeCubit.addEmployee(
+                                _manageEmployeeCubit.manageEmployee,
+                              );
+                              Navigator.pop(context);
+                            }
                           },
                           title: StringConstants.strSave,
                         ),
