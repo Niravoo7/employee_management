@@ -57,11 +57,19 @@ class EmployeeListScreen extends StatelessWidget {
                 final List<Employee> currentList =
                     state.employees
                         .where((Employee element) => element.endDate == null)
-                        .toList();
+                        .toList()
+                      ..forEach((Employee employee) {
+                        employee.isLastItem = false;
+                      });
+                currentList.last.isLastItem = true;
                 final List<Employee> previousList =
                     state.employees
                         .where((Employee element) => element.endDate != null)
-                        .toList();
+                        .toList()
+                      ..forEach((Employee employee) {
+                        employee.isLastItem = false;
+                      });
+                previousList.last.isLastItem = true;
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,9 +82,11 @@ class EmployeeListScreen extends StatelessWidget {
                               childrenPadding: EdgeInsets.zero,
                               showTrailingIcon: false,
                               initiallyExpanded: true,
-                              title: const Text(
-                                StringConstants.strCurrentEmployees,
-                                style: TextStyle(
+                              title: Text(
+                                (currentList.length == 1)
+                                    ? StringConstants.strCurrentEmployee
+                                    : StringConstants.strCurrentEmployees,
+                                style: const TextStyle(
                                   fontSize: FontSize.fontSizeMedium,
                                   fontWeight: FontWeight.w500,
                                   color: ThemeColors.clrPrimary,
@@ -95,9 +105,11 @@ class EmployeeListScreen extends StatelessWidget {
                               childrenPadding: EdgeInsets.zero,
                               showTrailingIcon: false,
                               initiallyExpanded: true,
-                              title: const Text(
-                                StringConstants.strPreviousEmployees,
-                                style: TextStyle(
+                              title: Text(
+                                (previousList.length == 1)
+                                    ? StringConstants.strPreviousEmployee
+                                    : StringConstants.strPreviousEmployees,
+                                style: const TextStyle(
                                   fontSize: FontSize.fontSizeMedium,
                                   fontWeight: FontWeight.w500,
                                   color: ThemeColors.clrPrimary,

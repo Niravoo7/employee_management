@@ -24,7 +24,9 @@ class StringConstants {
   static const String strNextTuesday = "Next Tuesday";
   static const String strAfterWeek = "After 1 week";
   static const String strCurrentEmployees = "Current employees";
+  static const String strCurrentEmployee = "Current employee";
   static const String strPreviousEmployees = "Previous employees";
+  static const String strPreviousEmployee = "Previous employee";
   static const String strSwipeLeftDelete = "Swipe left to delete";
   static const String strEmployeeDataHasBeenDeleted =
       "Employee data has been deleted";

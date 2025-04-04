@@ -97,7 +97,8 @@ class EmployeeItem extends StatelessWidget {
               ),
             ),
           ),
-          const Divider(height: 0, color: ThemeColors.clrWhite50),
+          if (!employee.isLastItem)
+            const Divider(height: 0, color: ThemeColors.clrWhite50),
         ],
       ),
     ),

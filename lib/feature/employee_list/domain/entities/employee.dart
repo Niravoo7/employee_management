@@ -22,4 +22,5 @@ class Employee {
   DateTime startDate;
   @HiveField(4)
   DateTime? endDate;
+  bool isLastItem = false;
 }
