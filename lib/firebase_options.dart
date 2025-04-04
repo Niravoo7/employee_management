@@ -72,4 +72,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'employeemanager-5fdbf.firebasestorage.app',
     iosBundleId: 'com.app.employee.manager',
   );
+
 }
