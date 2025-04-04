@@ -13,6 +13,7 @@ import "package:assignment/feature/manage_employee/presentation/widgets/select_r
 import "package:assignment/injection_container/injection_container.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:table_calendar/table_calendar.dart";
 
 class ManageEmployeeScreen extends StatefulWidget {
   const ManageEmployeeScreen({this.employee, super.key});
@@ -40,7 +41,6 @@ class _ManageEmployeeScreenState extends State<ManageEmployeeScreen> {
             startDate: DateTime.now(),
           ),
     );
-
     employeeNameController.text =
         _manageEmployeeCubit.manageEmployee.employeeName;
   }
@@ -91,6 +91,7 @@ class _ManageEmployeeScreenState extends State<ManageEmployeeScreen> {
                         ),
                         ListTile(
                           onTap: () {
+                            FocusScope.of(context).requestFocus(FocusNode());
                             showModalBottomSheet(
                               context: context,
                               useSafeArea: true,
@@ -181,11 +182,29 @@ class _ManageEmployeeScreenState extends State<ManageEmployeeScreen> {
                         ),
                         ActionButton(
                           onPressed: () {
+                            final RegExp regex = RegExp(r"^[a-zA-Z0-9\s-]+$");
                             if (employeeNameController.text.isEmpty ||
                                 employeeNameController.text == "") {
                               showSnackBar(
                                 context,
                                 title: StringConstants.strEmployeeNameRequired,
+                                action: SnackBarAction(
+                                  onPressed: () {},
+                                  label: StringConstants.strUndo,
+                                  textColor: ThemeColors.clrTransparent,
+                                ),
+                              );
+                            } else if (!regex.hasMatch(
+                              employeeNameController.text,
+                            )) {
+                              showSnackBar(
+                                context,
+                                title: StringConstants.strInvalidEmployeeName,
+                                action: SnackBarAction(
+                                  onPressed: () {},
+                                  label: StringConstants.strUndo,
+                                  textColor: ThemeColors.clrTransparent,
+                                ),
                               );
                             } else if (_manageEmployeeCubit
                                         .manageEmployee
@@ -197,14 +216,43 @@ class _ManageEmployeeScreenState extends State<ManageEmployeeScreen> {
                                 context,
                                 title:
                                     StringConstants.strEmployeeJobPostRequired,
+                                action: SnackBarAction(
+                                  onPressed: () {},
+                                  label: StringConstants.strUndo,
+                                  textColor: ThemeColors.clrTransparent,
+                                ),
+                              );
+                            } else if (_manageEmployeeCubit
+                                        .manageEmployee
+                                        .endDate !=
+                                    null &&
+                                !isSameDay(
+                                  _manageEmployeeCubit.manageEmployee.endDate,
+                                  DateTime(0),
+                                ) &&
+                                _manageEmployeeCubit.manageEmployee.startDate
+                                    .isAfter(
+                                      _manageEmployeeCubit
+                                          .manageEmployee
+                                          .endDate!,
+                                    )) {
+                              showSnackBar(
+                                context,
+                                title: StringConstants.strInvalidDates,
+                                action: SnackBarAction(
+                                  onPressed: () {},
+                                  label: StringConstants.strUndo,
+                                  textColor: ThemeColors.clrTransparent,
+                                ),
                               );
                             } else {
                               _manageEmployeeCubit.setEmployeeName(
                                 employeeNameController.text,
                               );
-                              _employeeCubit.addEmployee(
+                              _employeeCubit.addAndUpdateEmployee(
                                 _manageEmployeeCubit.manageEmployee,
                               );
+
                               Navigator.pop(context);
                             }
                           },

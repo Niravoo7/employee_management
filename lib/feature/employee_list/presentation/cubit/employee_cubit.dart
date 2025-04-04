@@ -3,6 +3,7 @@ import "package:assignment/feature/employee_list/domain/entities/employee.dart";
 import "package:assignment/feature/employee_list/presentation/cubit/employee_state.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:hive/hive.dart";
+import "package:table_calendar/table_calendar.dart";
 
 class EmployeeCubit extends Cubit<EmployeeState> {
   EmployeeCubit() : super(EmployeeInitial()) {
@@ -26,22 +27,16 @@ class EmployeeCubit extends Cubit<EmployeeState> {
     }
   }
 
-  Future<void> addEmployee(Employee employee) async {
+  Future<void> addAndUpdateEmployee(Employee employee) async {
     try {
       employee.employeeId ??= DateTime.now().millisecond.toString();
+      if (isSameDay(employee.endDate, DateTime(0))) {
+        employee.endDate = null;
+      }
       await employeeBox.put(employee.employeeId, employee);
       await loadEmployees(); // Refresh employee list after adding
     } catch (e) {
       emit(EmployeeError("Failed to add employee: $e"));
-    }
-  }
-
-  Future<void> updateEmployee(Employee employee) async {
-    try {
-      await employeeBox.put(employee.employeeId, employee);
-      await loadEmployees(); // Refresh employee list after updating
-    } catch (e) {
-      emit(EmployeeError("Failed to update employee: $e"));
     }
   }
 

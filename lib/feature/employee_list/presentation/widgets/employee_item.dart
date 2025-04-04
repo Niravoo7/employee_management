@@ -41,7 +41,7 @@ class EmployeeItem extends StatelessWidget {
                   title: StringConstants.strEmployeeDataHasBeenDeleted,
                   action: SnackBarAction(
                     onPressed: () {
-                      _employeeCubit.addEmployee(employee);
+                      _employeeCubit.addAndUpdateEmployee(employee);
                     },
                     label: StringConstants.strUndo,
                     textColor: ThemeColors.clrPrimary,

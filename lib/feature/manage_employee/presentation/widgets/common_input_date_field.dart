@@ -26,6 +26,7 @@ class _CommonInputDateFieldState extends State<CommonInputDateField> {
   Widget build(BuildContext context) => Expanded(
     child: GestureDetector(
       onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
         showDialog(
           context: context,
           builder:

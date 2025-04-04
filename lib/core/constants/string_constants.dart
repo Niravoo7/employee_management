@@ -32,7 +32,12 @@ class StringConstants {
   static const String strEditEmployeeDetails = "Edit Employee Details";
   static const String strFrom = "From";
   static const String strEmployeeNameRequired = "Employee name required!";
-  static const String strEmployeeJobPostRequired = "Employee job post required!";
+  static const String strEmployeeJobPostRequired =
+      "Employee job post required!";
+  static const String strInvalidEmployeeName =
+      "Name can only contain letters, spaces!";
+  static const String strInvalidDates =
+      "Start date cannot be later than the end date!";
 }
 
 String getDatePickerItemString(DatePickerItem datePickerItem) {
