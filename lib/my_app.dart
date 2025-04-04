@@ -2,6 +2,7 @@ import "package:assignment/core/constants/string_constants.dart";
 import "package:assignment/core/constants/theme_constants.dart";
 import "package:assignment/core/shared/domain/method/methods.dart";
 import "package:assignment/feature/employee_list/presentation/cubit/employee_cubit.dart";
+import "package:assignment/feature/manage_employee/presentation/cubit/calender_cubit.dart";
 import "package:assignment/feature/manage_employee/presentation/cubit/manage_employee_cubit.dart";
 import "package:assignment/injection_container/injection_container.dart";
 import "package:assignment/routes/app_routes.dart";
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<ManageEmployeeCubit>(
             create: (BuildContext context) => getIt<ManageEmployeeCubit>(),
+          ),
+          BlocProvider<CalenderCubit>(
+            create: (BuildContext context) => getIt<CalenderCubit>(),
           ),
         ],
         child: MaterialApp(

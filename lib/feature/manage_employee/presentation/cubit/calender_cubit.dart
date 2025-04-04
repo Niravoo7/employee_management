@@ -12,7 +12,7 @@ class CalenderParams {
 class CalenderCubit extends Cubit<CalenderState> {
   CalenderCubit() : super(CalenderInitial());
 
-  late CalenderParams calenderParams;
+  late CalenderParams calenderParams = CalenderParams();
 
   void setSelectedDate(DateTime selectedDate) {
     emit(CalenderInitial());
